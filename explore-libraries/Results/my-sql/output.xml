@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 3.1.2 (Python 3.6.8 on linux)" generated="20190629 16:09:47.764" rpa="false">
+<suite id="s1" name="MySql Tests" source="/home/yang/Learnings/myRobotFramework/explore-libraries/Tests/MySql_Tests.robot">
+<test id="s1-t1" name="Insert a Record">
+<kw name="Connect" library="MySql" type="setup">
+<kw name="Connect To Database Using Custom Params" library="DatabaseLibrary">
+<doc>Loads the DB API 2.0 module given `dbapiModuleName` then uses it to
+connect to the database using the map string `db_custom_param_string`.</doc>
+<arguments>
+<arg>pymysql</arg>
+<arg>database='my_test_db', user='root', password='example', host='localhost', port=3306</arg>
+</arguments>
+<msg timestamp="20190629 16:09:47.835" level="INFO">Executing : Connect To Database Using Custom Params : pymysql.connect(db_api_2.connect(database='my_test_db', user='root', password='example', host='localhost', port=3306)) </msg>
+<status status="PASS" starttime="20190629 16:09:47.815" endtime="20190629 16:09:47.837"></status>
+</kw>
+<status status="PASS" starttime="20190629 16:09:47.814" endtime="20190629 16:09:47.837"></status>
+</kw>
+<kw name="Save Current Row Count" library="MySql">
+<kw name="Row Count" library="DatabaseLibrary">
+<doc>Uses the input `selectStatement` to query the database and returns the number of rows from the query. Set
+optional input `sansTran` to True to run command without an explicit transaction commit or rollback.</doc>
+<arguments>
+<arg>SELECT * FROM DemoItems;</arg>
+</arguments>
+<assign>
+<var>${current_row_count}</var>
+</assign>
+<msg timestamp="20190629 16:09:47.838" level="INFO">Executing : Row Count  |  SELECT * FROM DemoItems; </msg>
+<msg timestamp="20190629 16:09:47.839" level="INFO">${current_row_count} = 1</msg>
+<status status="PASS" starttime="20190629 16:09:47.838" endtime="20190629 16:09:47.839"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${PREVIOUS_ROW_COUNT}</arg>
+<arg>${current_row_count}</arg>
+</arguments>
+<msg timestamp="20190629 16:09:47.840" level="INFO">${PREVIOUS_ROW_COUNT} = 1</msg>
+<status status="PASS" starttime="20190629 16:09:47.840" endtime="20190629 16:09:47.840"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${current_row_count}</arg>
+</arguments>
+<msg timestamp="20190629 16:09:47.841" level="INFO">1</msg>
+<status status="PASS" starttime="20190629 16:09:47.840" endtime="20190629 16:09:47.841"></status>
+</kw>
+<status status="PASS" starttime="20190629 16:09:47.838" endtime="20190629 16:09:47.841"></status>
+</kw>
+<kw name="Get Input Data" library="MySql">
+<kw name="Get Value From User" library="Dialogs">
+<doc>Pauses test execution and asks user to input a value.</doc>
+<arguments>
+<arg>Enter a First Name</arg>
+</arguments>
+<assign>
+<var>${name}</var>
+</assign>
+<msg timestamp="20190629 16:09:52.996" level="INFO">${name} = lirui</msg>
+<status status="PASS" starttime="20190629 16:09:47.842" endtime="20190629 16:09:52.997"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${FIRST_NAME}</arg>
+<arg>${name}</arg>
+</arguments>
+<msg timestamp="20190629 16:09:53.020" level="INFO">${FIRST_NAME} = lirui</msg>
+<status status="PASS" starttime="20190629 16:09:52.997" endtime="20190629 16:09:53.020"></status>
+</kw>
+<status status="PASS" starttime="20190629 16:09:47.841" endtime="20190629 16:09:53.021"></status>
+</kw>
+<kw name="Insert Record" library="MySql">
+<kw name="Get Current Date" library="DateTime">
+<doc>Returns current local or UTC time with an optional increment.</doc>
+<assign>
+<var>${current_date}</var>
+</assign>
+<msg timestamp="20190629 16:09:53.024" level="INFO">${current_date} = 2019-06-29 16:09:53.023</msg>
+<status status="PASS" starttime="20190629 16:09:53.023" endtime="20190629 16:09:53.024"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>INSERT INTO DemoItems (ItemName, FirstName) VALUES ('New Item ${current_date}', '${FIRST_NAME}')</arg>
+</arguments>
+<assign>
+<var>${insert_command}</var>
+</assign>
+<msg timestamp="20190629 16:09:53.026" level="INFO">${insert_command} = INSERT INTO DemoItems (ItemName, FirstName) VALUES ('New Item 2019-06-29 16:09:53.023', 'lirui')</msg>
+<status status="PASS" starttime="20190629 16:09:53.025" endtime="20190629 16:09:53.026"></status>
+</kw>
+<kw name="Execute Sql String" library="DatabaseLibrary">
+<doc>Executes the sqlString as SQL commands. Useful to pass arguments to your sql. Set optional input `sansTran` to
+True to run command without an explicit transaction commit or rollback.</doc>
+<arguments>
+<arg>${insert_command}</arg>
+</arguments>
+<msg timestamp="20190629 16:09:53.028" level="INFO">Executing : Execute SQL String  |  INSERT INTO DemoItems (ItemName, FirstName) VALUES ('New Item 2019-06-29 16:09:53.023', 'lirui') </msg>
+<status status="PASS" starttime="20190629 16:09:53.027" endtime="20190629 16:09:53.045"></status>
+</kw>
+<status status="PASS" starttime="20190629 16:09:53.022" endtime="20190629 16:09:53.045"></status>
+</kw>
+<kw name="Verify New Record Added" library="MySql">
+<kw name="Row Count" library="DatabaseLibrary">
+<doc>Uses the input `selectStatement` to query the database and returns the number of rows from the query. Set
+optional input `sansTran` to True to run command without an explicit transaction commit or rollback.</doc>
+<arguments>
+<arg>SELECT * FROM DemoItems;</arg>
+</arguments>
+<assign>
+<var>${new_row_count}</var>
+</assign>
+<msg timestamp="20190629 16:09:53.046" level="INFO">Executing : Row Count  |  SELECT * FROM DemoItems; </msg>
+<msg timestamp="20190629 16:09:53.049" level="INFO">${new_row_count} = 2</msg>
+<status status="PASS" starttime="20190629 16:09:53.046" endtime="20190629 16:09:53.049"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${new_row_count}</arg>
+</arguments>
+<msg timestamp="20190629 16:09:53.050" level="INFO">2</msg>
+<status status="PASS" starttime="20190629 16:09:53.050" endtime="20190629 16:09:53.050"></status>
+</kw>
+<kw name="Should Be Equal As Numbers" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<arguments>
+<arg>${new_row_count}</arg>
+<arg>${PREVIOUS_ROW_COUNT + 1 }</arg>
+</arguments>
+<status status="PASS" starttime="20190629 16:09:53.051" endtime="20190629 16:09:53.053"></status>
+</kw>
+<status status="PASS" starttime="20190629 16:09:53.045" endtime="20190629 16:09:53.054"></status>
+</kw>
+<kw name="Disconnect" library="MySql" type="teardown">
+<kw name="Disconnect From Database" library="DatabaseLibrary">
+<doc>Disconnects from the database.</doc>
+<msg timestamp="20190629 16:09:53.055" level="INFO">Executing : Disconnect From Database</msg>
+<status status="PASS" starttime="20190629 16:09:53.055" endtime="20190629 16:09:53.057"></status>
+</kw>
+<status status="PASS" starttime="20190629 16:09:53.054" endtime="20190629 16:09:53.057"></status>
+</kw>
+<tags>
+<tag>MySqlDB</tag>
+</tags>
+<status status="PASS" starttime="20190629 16:09:47.814" endtime="20190629 16:09:53.057" critical="yes"></status>
+</test>
+<test id="s1-t2" name="Verify Insert Contains Correct Input Data">
+<kw name="Connect" library="MySql" type="setup">
+<kw name="Connect To Database Using Custom Params" library="DatabaseLibrary">
+<doc>Loads the DB API 2.0 module given `dbapiModuleName` then uses it to
+connect to the database using the map string `db_custom_param_string`.</doc>
+<arguments>
+<arg>pymysql</arg>
+<arg>database='my_test_db', user='root', password='example', host='localhost', port=3306</arg>
+</arguments>
+<msg timestamp="20190629 16:09:53.060" level="INFO">Executing : Connect To Database Using Custom Params : pymysql.connect(db_api_2.connect(database='my_test_db', user='root', password='example', host='localhost', port=3306)) </msg>
+<status status="PASS" starttime="20190629 16:09:53.060" endtime="20190629 16:09:53.063"></status>
+</kw>
+<status status="PASS" starttime="20190629 16:09:53.059" endtime="20190629 16:09:53.065"></status>
+</kw>
+<kw name="Verify Last Record" library="MySql">
+<kw name="Query" library="DatabaseLibrary">
+<doc>Uses the input `selectStatement` to query for the values that will be returned as a list of tuples. Set optional
+input `sansTran` to True to run command without an explicit transaction commit or rollback.
+Set optional input `returnAsDict` to True to return values as a list of dictionaries.</doc>
+<arguments>
+<arg>SELECT * FROM DemoItems ORDER BY ItemId DESC LIMIT 1</arg>
+</arguments>
+<assign>
+<var>${queryResults}</var>
+</assign>
+<msg timestamp="20190629 16:09:53.067" level="INFO">Executing : Query  |  SELECT * FROM DemoItems ORDER BY ItemId DESC LIMIT 1 </msg>
+<msg timestamp="20190629 16:09:53.068" level="INFO">${queryResults} = ((2, 'New Item 2019-06-29 16:09:53.023', 'lirui'),)</msg>
+<status status="PASS" starttime="20190629 16:09:53.066" endtime="20190629 16:09:53.069"></status>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<arguments>
+<arg>${queryResults[0][2]}</arg>
+<arg>${FIRST_NAME}</arg>
+</arguments>
+<status status="PASS" starttime="20190629 16:09:53.069" endtime="20190629 16:09:53.070"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${queryResults[0][2]}</arg>
+</arguments>
+<msg timestamp="20190629 16:09:53.071" level="INFO">lirui</msg>
+<status status="PASS" starttime="20190629 16:09:53.070" endtime="20190629 16:09:53.072"></status>
+</kw>
+<status status="PASS" starttime="20190629 16:09:53.066" endtime="20190629 16:09:53.072"></status>
+</kw>
+<kw name="Disconnect" library="MySql" type="teardown">
+<kw name="Disconnect From Database" library="DatabaseLibrary">
+<doc>Disconnects from the database.</doc>
+<msg timestamp="20190629 16:09:53.074" level="INFO">Executing : Disconnect From Database</msg>
+<status status="PASS" starttime="20190629 16:09:53.074" endtime="20190629 16:09:53.074"></status>
+</kw>
+<status status="PASS" starttime="20190629 16:09:53.073" endtime="20190629 16:09:53.075"></status>
+</kw>
+<tags>
+<tag>MySqlDB</tag>
+</tags>
+<status status="PASS" starttime="20190629 16:09:53.059" endtime="20190629 16:09:53.075" critical="yes"></status>
+</test>
+<test id="s1-t3" name="Log All Rows">
+<kw name="Connect" library="MySql" type="setup">
+<kw name="Connect To Database Using Custom Params" library="DatabaseLibrary">
+<doc>Loads the DB API 2.0 module given `dbapiModuleName` then uses it to
+connect to the database using the map string `db_custom_param_string`.</doc>
+<arguments>
+<arg>pymysql</arg>
+<arg>database='my_test_db', user='root', password='example', host='localhost', port=3306</arg>
+</arguments>
+<msg timestamp="20190629 16:09:53.076" level="INFO">Executing : Connect To Database Using Custom Params : pymysql.connect(db_api_2.connect(database='my_test_db', user='root', password='example', host='localhost', port=3306)) </msg>
+<status status="PASS" starttime="20190629 16:09:53.076" endtime="20190629 16:09:53.079"></status>
+</kw>
+<status status="PASS" starttime="20190629 16:09:53.075" endtime="20190629 16:09:53.079"></status>
+</kw>
+<kw name="Log All Rows" library="MySql">
+<kw name="Query" library="DatabaseLibrary">
+<doc>Uses the input `selectStatement` to query for the values that will be returned as a list of tuples. Set optional
+input `sansTran` to True to run command without an explicit transaction commit or rollback.
+Set optional input `returnAsDict` to True to return values as a list of dictionaries.</doc>
+<arguments>
+<arg>SELECT * FROM DemoItems ORDER BY ItemId</arg>
+</arguments>
+<assign>
+<var>${queryResults}</var>
+</assign>
+<msg timestamp="20190629 16:09:53.081" level="INFO">Executing : Query  |  SELECT * FROM DemoItems ORDER BY ItemId </msg>
+<msg timestamp="20190629 16:09:53.082" level="INFO">${queryResults} = ((1, 'New Item 2019-06-29 16:00:45.293', 'yang'), (2, 'New Item 2019-06-29 16:09:53.023', 'lirui'))</msg>
+<status status="PASS" starttime="20190629 16:09:53.080" endtime="20190629 16:09:53.083"></status>
+</kw>
+<kw name="Log Many" library="BuiltIn">
+<doc>Logs the given messages as separate entries using the INFO level.</doc>
+<arguments>
+<arg>${queryResults}</arg>
+</arguments>
+<msg timestamp="20190629 16:09:53.083" level="INFO">((1, 'New Item 2019-06-29 16:00:45.293', 'yang'), (2, 'New Item 2019-06-29 16:09:53.023', 'lirui'))</msg>
+<status status="PASS" starttime="20190629 16:09:53.083" endtime="20190629 16:09:53.083"></status>
+</kw>
+<status status="PASS" starttime="20190629 16:09:53.080" endtime="20190629 16:09:53.084"></status>
+</kw>
+<kw name="Disconnect" library="MySql" type="teardown">
+<kw name="Disconnect From Database" library="DatabaseLibrary">
+<doc>Disconnects from the database.</doc>
+<msg timestamp="20190629 16:09:53.086" level="INFO">Executing : Disconnect From Database</msg>
+<status status="PASS" starttime="20190629 16:09:53.085" endtime="20190629 16:09:53.088"></status>
+</kw>
+<status status="PASS" starttime="20190629 16:09:53.084" endtime="20190629 16:09:53.088"></status>
+</kw>
+<tags>
+<tag>MySqlDB</tag>
+</tags>
+<status status="PASS" starttime="20190629 16:09:53.075" endtime="20190629 16:09:53.088" critical="yes"></status>
+</test>
+<doc>These are some MySql Database tests</doc>
+<status status="PASS" starttime="20190629 16:09:47.765" endtime="20190629 16:09:53.089"></status>
+</suite>
+<statistics>
+<total>
+<stat pass="3" fail="0">Critical Tests</stat>
+<stat pass="3" fail="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="3" fail="0">MySqlDB</stat>
+</tag>
+<suite>
+<stat pass="3" fail="0" id="s1" name="MySql Tests">MySql Tests</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
